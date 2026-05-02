@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisualX-Lab – Interactive Computer Graphics Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Three.js for 3D rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="logo-glow"></div>
+            <h1>VisualX-Lab</h1>
+            <p>Initializing Environment...</p>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
+    </div>
+
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="gradient-sphere orb-1"></div>
+        <div class="gradient-sphere orb-2"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <div>
+                        <h2>VisualX-Lab</h2>
+                        <span>Visualize. Transform. Understand.</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul id="nav-list">
+                    <li class="nav-item active" data-module="transform2d">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                            <line x1="9" y1="21" x2="9" y2="9"></line>
+                        </svg>
+                        <span>2D Transformations</span>
+                    </li>
+                    <li class="nav-item" data-module="clipping">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="6" cy="6" r="3"></circle>
+                            <circle cx="6" cy="18" r="3"></circle>
+                            <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+                            <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+                            <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+                        </svg>
+                        <span>Clipping Algorithms</span>
+                    </li>
+                    <li class="nav-item" data-module="transform3d">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                            <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                            <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                        <span>3D Transformations</span>
+                    </li>
+                    <li class="nav-item" data-module="projection">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <span>Projection & Viewing</span>
+                    </li>
+                    <li class="nav-item" data-module="visibleSurface">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        <span>Visible Surface Detection</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace glass-panel">
+            <div class="canvas-container" id="canvas-container">
+                <!-- Canvas will be injected here -->
+                <canvas id="main-canvas"></canvas>
+            </div>
+            
+            <!-- Contextual overlay (e.g., axes, labels) -->
+            <div class="workspace-overlay" id="workspace-overlay"></div>
+        </main>
+
+        <!-- Right Control Panel -->
+        <aside class="controls glass-panel">
+            <div class="controls-header">
+                <h3>Controls</h3>
+            </div>
+            <div class="controls-body" id="dynamic-controls">
+                <!-- Controls injected dynamically via JS -->
+            </div>
+        </aside>
+
+        <!-- Bottom Info Panel -->
+        <section class="info-panel glass-panel">
+            <div class="info-content" id="dynamic-info">
+                <!-- Content injected dynamically via JS -->
+                <div class="info-header">
+                    <h3 id="info-title">Module Concept</h3>
+                    <div class="badge">Formula</div>
+                </div>
+                <div class="info-body">
+                    <p id="info-desc">Select a module to learn about its inner workings.</p>
+                    <div class="formula-box" id="info-formula">
+                        <code>// Formula will appear here</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
