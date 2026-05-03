@@ -1,5 +1,7 @@
 # 🚀 VisualX-Lab
 
+https://visual-x-lab.vercel.app/
+
 ### *Visualize. Transform. Understand.*
 
 An interactive web-based Computer Graphics simulator designed to demonstrate **2D and 3D transformations** in real-time.
@@ -106,6 +108,14 @@ VisualX-Lab/
 3. Run `index.html` in any modern browser (Chrome recommended)
 
 No installation or setup required.
+
+OR 
+1. click on the link below :
+https://visual-x-lab.vercel.app/
+
+OR 
+1. scan the qr code below : 
+<img width="651" height="651" alt="Screenshot 2026-05-04 003418" src="https://github.com/user-attachments/assets/c167bb13-ca99-4d79-b465-8679d08d3cd4" />
 
 ---
 
